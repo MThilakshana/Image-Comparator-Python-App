@@ -27,10 +27,16 @@ class ImageUploaderApp:
         self.upload_button = tk.Button(self.master, text="Upload Images", command=self.upload_images)
         self.upload_button.grid(row=3, column=0, columnspan=2, pady=10)
         
-        self.upload_button = tk.Button(self.master, text="Compare Images",command=self.imageComparator)
-        self.upload_button.grid(row=4, column=0, columnspan=2, pady=10)
+        self.compare_button = tk.Button(self.master, text="Compare Images",command=self.imageComparator)
+        self.compare_button.grid(row=4, column=0, columnspan=2, pady=10)
         
-    def find_face(image_path):
+        self.result_label = tk.Label(self.master)
+        self.result_label.grid(row=5, column=0,columnspan=2, padx=10, pady=10)
+        
+        self.acc_label = tk.Label(self.master)
+        self.acc_label.grid(row=6, column=0,columnspan=2, padx=10, pady=10)
+        
+    def find_face(self, img_path):
         image = cv2.imread(img_path)
         face_enc = face_recognition.face_encodings(image)
         return face_enc[0]
@@ -53,8 +59,8 @@ class ImageUploaderApp:
         else:
             result = "The faces are not same."
         
-        
-        
+        self.result_label.config(text=result)
+        self.acc_label.config(text=acc)
 
 
     def upload_images(self):
@@ -78,6 +84,6 @@ class ImageUploaderApp:
 root = tk.Tk()
 app = ImageUploaderApp(root)
 root.title('Image-Comparator')
-root.geometry('450x600')
+root.geometry('450x500')
 root.resizable(False,False)
 root.mainloop()
